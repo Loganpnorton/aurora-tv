@@ -1,0 +1,17 @@
+# Aurora Home Server
+#   docker compose up -d          start (first run builds from the latest release)
+#   docker compose build --pull --no-cache && docker compose up -d     update
+# Then open http://<this-machine>:8484 to finish setup.
+services:
+  aurora:
+    build: https://github.com/Loganpnorton/aurora-tv.git#main:docker
+    container_name: aurora-server
+    # Host networking lets TVs and phones find the server by themselves. If your Docker can't
+    # use it, swap it for the ports below and enter the address on devices instead.
+    network_mode: host
+    # ports: ["8484:8484"]
+    volumes:
+      - aurora-data:/data
+    restart: unless-stopped
+volumes:
+  aurora-data:
